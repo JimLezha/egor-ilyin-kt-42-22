@@ -1,23 +1,62 @@
+/*using Microsoft.AspNetCore.Diagnostics;
+using Microsoft.EntityFrameworkCore;
+using egorIlyinKt-42-22.Database;
+using egorIlyinKt-42-22.Middleware;
+using egorIlyinKt-42-22.ServiceExtensions;
+*/
+using NLog;
+using NLog.Web;
+
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+var logger = LogManager.Setup().LoadConfigurationFromAppSettings().GetCurrentClassLogger();
 
-builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
 
-var app = builder.Build();
-
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+try
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+
+    builder.Logging.ClearProviders();
+    builder.Host.UseNLog();
+
+    // Add services to the container.
+
+    builder.Services.AddControllers();
+    // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+    builder.Services.AddEndpointsApiExplorer();
+    builder.Services.AddSwaggerGen();
+
+    /*builder.Services.AddDbContext<UniversityContext>(options =>
+        options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+    builder.Services.AddServices();
+*/
+    var app = builder.Build();
+
+    // Configure the HTTP request pipeline.
+    if (app.Environment.IsDevelopment())
+    {
+        app.UseSwagger();
+        app.UseSwaggerUI();
+    }
+
+/*    app.UseMiddleware<ExceptionHandlerMiddleware>();*/
+
+    app.UseAuthorization();
+
+    app.MapControllers();
+
+    app.Run();
+
+
 }
 
-app.UseAuthorization();
+catch (Exception ex)
+{
+    logger.Error(ex, "Stopped program because of exeption");
+}
 
-app.MapControllers();
-
-app.Run();
+finally
+{
+    LogManager.Shutdown();
+}
