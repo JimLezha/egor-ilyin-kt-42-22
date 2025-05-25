@@ -1,5 +1,7 @@
 ﻿using egorIlyinKT_42_22.Models;
 using Microsoft.EntityFrameworkCore;
+using egorIlyinKT_42_22.Data.Configurations;
+using egorIlyinKT_42_22.Database.Configurations;
 
 namespace egorIlyinKT_42_22.Database
 {
