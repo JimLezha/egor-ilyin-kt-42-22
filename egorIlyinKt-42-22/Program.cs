@@ -1,8 +1,7 @@
-/*using Microsoft.AspNetCore.Diagnostics;
-using egorIlyinKt-42-22.Middleware;
-using egorIlyinKt-42-22.ServiceExtensions;
-*/
+using Microsoft.AspNetCore.Diagnostics;
+//using egorIlyinKT_42_22.Middleware;
 using Microsoft.EntityFrameworkCore;
+using egorIlyinKT_42_22.ServiceExtensions;
 using egorIlyinKT_42_22.Database;
 using NLog;
 using NLog.Web;
@@ -29,7 +28,7 @@ try
     builder.Services.AddDbContext<UniversityContext>(options =>
         options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-    //builder.Services.AddServices();
+    builder.Services.AddServices();
     var app = builder.Build();
 
     // Configure the HTTP request pipeline.
@@ -39,7 +38,7 @@ try
         app.UseSwaggerUI();
     }
 
-/*    app.UseMiddleware<ExceptionHandlerMiddleware>();*/
+    /*app.UseMiddleware<ExceptionHandlerMiddleware>();*/
 
     app.UseAuthorization();
 

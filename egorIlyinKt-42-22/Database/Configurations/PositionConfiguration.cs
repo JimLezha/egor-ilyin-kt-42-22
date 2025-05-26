@@ -16,3 +16,4 @@ namespace egorIlyinKT_42_22.Database.Configurations
         }
     }
 }
+ 
