@@ -13,5 +13,6 @@ namespace egorIlyinKT_42_22.Interfaces
         Task<Discipline> AddDisciplineAsync(DisciplineDto disciplineDto);
         Task<Discipline> UpdateDisciplineAsync(int id, DisciplineDto disciplineDto);
         Task<bool> DeleteDisciplineAsync(int id);
+        Task<List<DisciplineFilter>> GetDisciplinesByHeadLastNameAsync(string headLastName);
     }
 }

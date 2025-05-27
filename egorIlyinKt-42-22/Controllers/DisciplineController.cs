@@ -3,7 +3,12 @@ using egorIlyinKT_42_22.Filters.DisciplineFilters;
 using egorIlyinKT_42_22.Models;
 using egorIlyinKT_42_22.Models.DTO;
 using egorIlyinKT_42_22.Services.DisciplineServices;
+using egorIlyinKT_42_22.Services.DepartmentServices;
+using egorIlyinKT_42_22.Services.TeacherServices;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using egorIlyinKT_42_22.Database;
+using egorIlyinKT_42_22.Interfaces;
 
 namespace egorIlyinKT_42_22.Controllers
 {
@@ -86,6 +91,18 @@ namespace egorIlyinKT_42_22.Controllers
             }
 
             return NoContent();
+        }
+
+
+        [HttpGet("head/lastname/{headLastName}")]
+        public async Task<IActionResult> GetDisciplinesByHeadLastName(string headLastName)
+        {
+            var disciplines = await _disciplineService.GetDisciplinesByHeadLastNameAsync(headLastName);
+            if (disciplines == null || !disciplines.Any())
+            {
+                return NotFound("Дисциплины не найдены для указанного заведующего.");
+            }
+            return Ok(disciplines);
         }
     }
 }
