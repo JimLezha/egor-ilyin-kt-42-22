@@ -113,13 +113,11 @@ namespace egorIlyinKT_42_22.Services.DisciplineServices
                                      join l in _context.Loads on d.Id equals l.DisciplineId
                                      join t in _context.Teachers on l.TeacherId equals t.Id
                                      join dep in _context.Departments on t.DepartmentId equals dep.Id
-                                     where dep.Head.LastName == headLastName
+                                     join h in _context.Teachers on dep.HeadId equals h.Id
+                                     where h.LastName == headLastName
                                      select new DisciplineFilter
                                      {
-                                         Id = d.Id,
-                                         Name = d.Name,
-                                         TotalHours = d.Loads.Sum(l => l.Hours),
-                                         Teachers = d.Loads.Select(l => $"{l.Teacher.FirstName} {l.Teacher.LastName}").Distinct().ToList()
+                                         Name = d.Name
                                      })
                                      .Distinct()
                                      .ToListAsync();

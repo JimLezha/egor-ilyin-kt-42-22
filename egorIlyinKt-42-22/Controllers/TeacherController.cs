@@ -17,7 +17,7 @@ namespace egorIlyinKT_42_22.Controllers
             _teacherService = teacherService;
         }
 
-        [HttpGet]
+        [HttpGet("filter")]
         public async Task<IActionResult> GetTeachers([FromQuery] string? departmentName, [FromQuery] string? degreeName, [FromQuery] string? positionName)
         {
             var teachers = await _teacherService.GetTeachersAsync(departmentName, degreeName, positionName);
@@ -35,7 +35,7 @@ namespace egorIlyinKT_42_22.Controllers
             return Ok(teacher);
         }
 
-        [HttpPost("filter")]
+        [HttpPost]
         public async Task<IActionResult> AddTeacher([FromBody] TeacherDto teacherDto)
         {
             if (teacherDto == null)
