@@ -1,6 +1,4 @@
-using Microsoft.AspNetCore.Diagnostics;
-/*using egorIlyinKt-42-22.Middleware;
-*/
+using egorIlyinKT_42_22.Middleware;
 using egorIlyinKT_42_22.ServiceExtensions;
 using Microsoft.EntityFrameworkCore;
 using egorIlyinKT_42_22.Database;
@@ -39,7 +37,7 @@ try
         app.UseSwaggerUI();
     }
 
-/*    app.UseMiddleware<ExceptionHandlerMiddleware>();*/
+    app.UseMiddleware<ExceptionHandlerMiddleware>();
 
     app.UseAuthorization();
 
